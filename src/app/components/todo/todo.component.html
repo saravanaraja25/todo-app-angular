@@ -1,0 +1,36 @@
+<div class="add-task-form">
+    <input type="text" [(ngModel)]="todo"  name="todo" placeholder="Enter Your Todo" (keydown.enter)="addTodo()"/>
+    <button (click)="addTodo()">Add Todo</button>
+</div>
+
+<div class="container" cdkDropListGroup>
+    <div class="example-container">
+        <h2>To do</h2>
+
+        <div cdkDropList [cdkDropListData]="todos" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let todoItem of todos" cdkDrag>
+                <app-todo-item (removeTodoItem)="removeTodo($event)" class="todo-items" [todoItem]="todoItem"></app-todo-item>
+            </div>
+        </div>
+    </div>
+
+    <div class="example-container">
+        <h2>On Progress</h2>
+
+        <div cdkDropList [cdkDropListData]="todosOnProgress" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let todoItem of todosOnProgress" cdkDrag>
+                <app-todo-item (removeTodoItem)="removeTodo($event)" class="todo-items" [todoItem]="todoItem"></app-todo-item>
+            </div>
+        </div>
+    </div>
+
+    <div class="example-container">
+        <h2>Done</h2>
+
+        <div cdkDropList [cdkDropListData]="todosDone" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let todoItem of todosDone" cdkDrag>
+                <app-todo-item (removeTodoItem)="removeTodo($event)" class="todo-items" [todoItem]="todoItem"></app-todo-item>
+            </div>
+        </div>
+    </div>
+</div>

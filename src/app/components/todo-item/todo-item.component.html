@@ -1,0 +1,6 @@
+<div [ngClass]="{'complete': todoItem.status==2, 'progress': todoItem.status==1, 'todo': todoItem.status==0}" class="todo-item">
+    <span class="title">{{todoItem.title}}</span>
+    <span (click)="removeTodo(todoItem)">
+        <mat-icon class="cancel-icon" aria-hidden="false">cancel</mat-icon>
+    </span>
+</div>

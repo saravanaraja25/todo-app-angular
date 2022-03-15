@@ -1,0 +1,28 @@
+.todo-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    span{
+        display: flex;
+    }
+    .cancel-icon{
+        cursor: pointer;
+        color: #ff9800;
+        &:hover{
+            color: #ffa726;
+        }
+    }
+}
+.progress{
+    color: orange;
+}
+.todo{
+    color: red;
+}
+.complete{
+    color: green;
+    span.title{
+        text-decoration: line-through;
+    }
+}
