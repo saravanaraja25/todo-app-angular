@@ -1,11 +1,12 @@
 export enum TodoStatus {
-    Todo,
-    Onprogress,
-    Done
+    Todo = "Todo",
+    Onprogress = "Onprogress",
+    Done = "Done"
 }
 
 export interface Todo {
-    id?: number;
+    id?: string;
     title: string;
     status: TodoStatus;
+    name?: string;
 }

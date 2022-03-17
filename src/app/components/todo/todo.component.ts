@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo, TodoStatus } from '../../Todo';
-import { TODOS } from '../../TodoData';
+import { TodoService } from 'src/app/services/todo.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -20,16 +19,25 @@ export class TodoComponent implements OnInit {
 
   todosDone: Todo[] = [];
 
-  constructor() {}
+  constructor(private todoService: TodoService) {}
   
   ngOnInit(): void {
+    this.todoService.subjectMessage.subscribe(
+      (todos: Todo[]) => {
+        if(todos) {
+          this.todos = todos.filter(t => t.status === TodoStatus.Todo);
+          this.todosOnProgress = todos.filter(t => t.status === TodoStatus.Onprogress);
+          this.todosDone = todos.filter(t => t.status === TodoStatus.Done);
+        }
+      }
+    );
+    this.todoService.getTodos();
   }
 
 
   addTodo() {
     if (this.todo.length > 0) {
-      this.todos.push({
-        id: Math.random(),
+      this.todoService.addTodo({
         title: this.todo,
         status: TodoStatus.Todo,
       });
@@ -39,14 +47,7 @@ export class TodoComponent implements OnInit {
 
   removeTodo(todo: Todo) {
     console.log(todo)
-    if(todo.status === TodoStatus.Todo) {
-      this.todos = this.todos.filter(t => t.id !== todo.id);
-    } else if(todo.status === TodoStatus.Onprogress) {
-      this.todosOnProgress = this.todosOnProgress.filter(t => t.id !== todo.id);
-    }
-    else if(todo.status === TodoStatus.Done) {
-      this.todosDone = this.todosDone.filter(t => t.id !== todo.id);
-    }
+    this.todoService.removeTodo(todo);
   }
 
 
@@ -62,10 +63,13 @@ export class TodoComponent implements OnInit {
       );
       if(event.container.id === 'cdk-drop-list-0') {
         this.todos[event.currentIndex].status = TodoStatus.Todo;
+        this.todoService.updateTodo(this.todos[event.currentIndex]);
       } else if(event.container.id === 'cdk-drop-list-1') {
         this.todosOnProgress[event.currentIndex].status = TodoStatus.Onprogress;
+        this.todoService.updateTodo(this.todosOnProgress[event.currentIndex]);
       }else if(event.container.id === 'cdk-drop-list-2') {
         this.todosDone[event.currentIndex].status = TodoStatus.Done;
+        this.todoService.updateTodo(this.todosDone[event.currentIndex]);
       }
     }
   }
