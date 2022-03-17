@@ -40,6 +40,7 @@ export class TodoComponent implements OnInit {
       this.todoService.addTodo({
         title: this.todo,
         status: TodoStatus.Todo,
+        createdAt: new Date(),
       });
       this.todo = '';
     }

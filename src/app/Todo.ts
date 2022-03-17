@@ -9,4 +9,5 @@ export interface Todo {
     title: string;
     status: TodoStatus;
     name?: string;
+    createdAt?: Date;
 }

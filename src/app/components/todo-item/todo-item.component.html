@@ -1,5 +1,9 @@
 <div [ngClass]="{'complete': todoItem.status=='Done', 'progress': todoItem.status=='Onprogress', 'todo': todoItem.status=='Todo'}" class="todo-item">
-    <span class="title">{{todoItem.title}}</span>
+    <span class="title">
+        {{todoItem.title | titleCase}}
+        <br/>
+        Created At: {{todoItem.createdAt | date}}
+    </span>
     <span (click)="removeTodo(todoItem)">
         <mat-icon class="cancel-icon" aria-hidden="false">cancel</mat-icon>
     </span>
